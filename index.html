@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://i0.wp.com/www.mpslakers.com/wp-content/uploads/2020/01/schoology-logo.png?fit=511%2C511&ssl=1">
+    <title>Home | Schoology</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
 
+        .header {
+            background: linear-gradient(to right, #9c0c0c, #f70202);
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            text-shadow: 2px 2px #000000; /* Text stroke for header text */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: calc(100vh - 60px);
+        }
+
+        .cool-button {
+            background: linear-gradient(to right, #9c0c0c, #f70202);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 10px;
+            font-family: Arial, sans-serif;
+            text-shadow: 2px 2px #000000; /* Text stroke for button text */
+        }
+
+        .cool-button:hover {
+            background: linear-gradient(to right, #2980b9, #3498db);
+            transform: scale(1.05);
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .separator {
+            color: #fff; /* White text color */
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Project Unblocked</h1>
+    </div>
+    <div class="button-container">
+        <div class="row">
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/Main.html')">Cloak This Tab</button>
+        </div>
+        <div class="separator">Apps</div>
+        <div class="row">
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/gay.html')">Vote For Games</button>
+            <button class="cool-button" onclick="openGame('https://houydabeast.redpill.ml/')">Proxy Search</button>
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/incognito.html')">Incognito Mode</button>
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Hi/main/index.html#/')">Geforce Now</button>
+        </div>
+        <div class="separator">Games</div>
+        <div class="row">
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/3.html')">Slope</button>
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/4.html')">EaglerCraft (Basically Minecraft)</button>
+            <button class="cool-button" onclick="openGame('https://www.google.com/logos/2019/july4th19/r6/july4th19.html?hl=en')">Google Doodle Baseball</button>
+            <button class="cool-button" onclick="openGame('https://www.google.com/logos/2017/cricket17/cricket17.html')">Google Doodle Cricket</button>
+        </div>
+            <div class="row">
+            <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Schoology/main/2.html')">Retro Bowl</button>
+             <button class="cool-button" onclick="openGame('https://raw.githack.com/Parcoil/nativegames.net/main/play/subwaysurfers/index.html')">Subway Surfers</button>
+             <button class="cool-button" onclick="openGame('https://raw.githack.com/D3ch/hell/main/Games/monkey-mart/index.html')">Monkey Mart</button>
+        </div>
+        <div class="separator">Movies</div>
+<div class="row">
+    <button class="cool-button" onclick="openGame('https://thelorax.mov/')">The Lorax</button>
+        <button class="cool-button" onclick="openGame('https://raw.githack.com/DreadzHubYT/Movies/main/Homealone.html')">Home Alone</button>
+</div>
+    </div>
+
+    <script>
+function openGame(url) {
+    var win = window.open();
+    var iframe = win.document.createElement('iframe');
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.src = url;
+    win.document.body.appendChild(iframe);
+    win.document.title = "Home | Schoology";
+
+    var link = win.document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://i0.wp.com/www.mpslakers.com/wp-content/uploads/2020/01/schoology-logo.png?fit=511%2C511&ssl=1';
+    win.document.head.appendChild(link);
+
+    // Create a close button
+    var closeButton = win.document.createElement('button');
+    closeButton.innerText = 'Panic Button';
+    closeButton.style.position = 'fixed';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '10px';
+    closeButton.style.zIndex = '9999';
+    closeButton.style.padding = '5px';
+    closeButton.style.background = '#fff';
+    closeButton.style.border = '1px solid #000';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.class = 'cool-button';
+
+    // Add an event listener to close the tab when the button is clicked
+    closeButton.addEventListener('click', function () {
+        win.close();
+    });
+
+    win.document.body.appendChild(closeButton);
+}
+
+    </script>
+</body>
+</html>
