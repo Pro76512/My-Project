@@ -7,7 +7,7 @@
             text-align: center;
         }
         h1 {
-            color: #00000;
+            color: #FF0000;
         }
         .game-container {
             margin-top: 50px;
@@ -18,7 +18,7 @@
             text-align: center;
         }
         .game-button {
-            background-color: #000;
+            background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -41,11 +41,19 @@
         <input type="number" id="guess" class="game-input">
         <button onclick="checkGuess()" class="game-button">Check</button>
         <p id="result" class="result"></p>
+        <button onclick="resetGame()" id="replay-button" class="game-button" style="display: none;">Play Again</button>
     </div>
 
     <script>
-        // Generate a random number between 1 and 100
-        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        let randomNumber;
+        let attempts = 0;
+
+        function startGame() {
+            // Generate a random number between 1 and 100
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById("replay-button").style.display = "none";
+        }
 
         function checkGuess() {
             // Get the user's guess
@@ -54,13 +62,24 @@
 
             // Check if the guess is correct, too low, or too high
             if (guess === randomNumber) {
-                document.getElementById("result").textContent = "Congratulations! You guessed the correct number!";
+                document.getElementById("result").textContent = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+                document.getElementById("replay-button").style.display = "inline";
             } else if (guess < randomNumber) {
                 document.getElementById("result").textContent = "Too low! Try a higher number.";
             } else {
                 document.getElementById("result").textContent = "Too high! Try a lower number.";
             }
+
+            attempts++;
         }
+
+        function resetGame() {
+            startGame();
+            document.getElementById("guess").value = "";
+            document.getElementById("result").textContent = "";
+        }
+
+        startGame();
     </script>
 </body>
 </html>
