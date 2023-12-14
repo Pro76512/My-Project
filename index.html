@@ -47,6 +47,7 @@
     <script>
         let randomNumber;
         let attempts = 0;
+        const maxAttempts = 10;
 
         function startGame() {
             // Generate a random number between 1 and 100
@@ -64,6 +65,7 @@
             if (guess === randomNumber) {
                 document.getElementById("result").textContent = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
                 document.getElementById("replay-button").style.display = "inline";
+                disableInput();
             } else if (guess < randomNumber) {
                 document.getElementById("result").textContent = "Too low! Try a higher number.";
             } else {
@@ -71,12 +73,29 @@
             }
 
             attempts++;
+
+            if (attempts >= maxAttempts) {
+                document.getElementById("result").textContent = `Game over! The correct number was ${randomNumber}.`;
+                document.getElementById("replay-button").style.display = "inline";
+                disableInput();
+            }
         }
 
         function resetGame() {
             startGame();
             document.getElementById("guess").value = "";
             document.getElementById("result").textContent = "";
+            enableInput();
+        }
+
+        function disableInput() {
+            document.getElementById("guess").disabled = true;
+            document.getElementById("check-button").disabled = true;
+        }
+
+        function enableInput() {
+            document.getElementById("guess").disabled = false;
+            document.getElementById("check-button").disabled = false;
         }
 
         startGame();
