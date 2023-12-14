@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Game Website</title>
+    <title>Guess the Number</title>
     <style>
         body {
             text-align: center;
@@ -11,6 +11,11 @@
         }
         .game-container {
             margin-top: 50px;
+        }
+        .game-input {
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
         }
         .game-button {
             background-color: #4CAF50;
@@ -24,13 +29,38 @@
             border-radius: 5px;
             margin: 10px;
         }
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to the Game Website!</h1>
+    <h1>Guess the Number</h1>
     <div class="game-container">
-        <a href="snake.html" class="game-button">Play Snake Game</a>
-        <a href="tetris.html" class="game-button">Play Tetris Game</a>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="number" id="guess" class="game-input">
+        <button onclick="checkGuess()" class="game-button">Check</button>
+        <p id="result" class="result"></p>
     </div>
+
+    <script>
+        // Generate a random number between 1 and 100
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        function checkGuess() {
+            // Get the user's guess
+            const guessInput = document.getElementById("guess");
+            const guess = parseInt(guessInput.value);
+
+            // Check if the guess is correct, too low, or too high
+            if (guess === randomNumber) {
+                document.getElementById("result").textContent = "Congratulations! You guessed the correct number!";
+            } else if (guess < randomNumber) {
+                document.getElementById("result").textContent = "Too low! Try a higher number.";
+            } else {
+                document.getElementById("result").textContent = "Too high! Try a lower number.";
+            }
+        }
+    </script>
 </body>
 </html>
