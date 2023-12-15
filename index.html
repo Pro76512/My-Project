@@ -1,72 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Catch the Falling Fruit</title>
+    <title>Cool Website</title>
     <style>
         body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
             margin: 0;
             padding: 0;
-            overflow: hidden;
         }
-        #basket {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: url('basket.png');
-            background-size: cover;
+        header {
+            background-color: #333;
+            padding: 20px;
         }
-        .fruit {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            animation: fall linear infinite;
+        h1 {
+            font-size: 36px;
+            margin: 0;
         }
-        @keyframes fall {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(500px);
-            }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #333;
+            padding: 20px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div id="basket"></div>
+    <header>
+        <h1>Welcome to the Cool Website!</h1>
+    </header>
 
-    <script>
-        var score = 0;
+    <div class="container">
+        <h2>About</h2>
+        <p>This is a cool website designed to showcase the power of HTML and CSS.</p>
+        <p>Feel free to explore and have fun!</p>
+        <a class="button" href="#">Learn More</a>
+    </div>
 
-        function updateScore() {
-            document.getElementById("score").innerText = "Score: " + score;
-        }
-
-        function createFruit() {
-            var fruits = ['apple.png', 'banana.png', 'orange.png'];
-            var randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
-
-            var fruit = document.createElement("div");
-            fruit.className = "fruit";
-            fruit.style.backgroundImage = "url('" + randomFruit + "')";
-            fruit.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
-
-            fruit.addEventListener("click", function() {
-                this.remove();
-                score++;
-                updateScore();
-            });
-
-            document.body.appendChild(fruit);
-        }
-
-        setInterval(createFruit, 1000);
-
-        window.addEventListener("mousemove", function(event) {
-            var basket = document.getElementById("basket");
-            basket.style.left = event.clientX - 50 + "px";
-        });
-    </script>
+    <footer>
+        <p>&copy; 2022 Cool Website. All rights reserved.</p>
+    </footer>
 </body>
 </html>
