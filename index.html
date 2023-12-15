@@ -1,44 +1,74 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Guess the Number</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: Arial, sans-serif;
-    }
-  </style>
-</head>
-<body>
-  <h1>Guess the Number</h1>
-  <p>Try to guess the secret number between 1 and 100:</p>
-  <input type="number" id="guessInput">
-  <button onclick="checkGuess()">Submit</button>
-  <p id="message"></p>
+  <head>
+    <title>Sandbox Building Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="game-container">
+      <div id="grid"></div>
+    </div>
 
-  <script>
-    // Generate a random number between 1 and 100
-    const secretNumber = Math.floor(Math.random() * 100) + 1;
-    let attempts = 0;
-
-    function checkGuess() {
-      const guess = parseInt(document.getElementById('guessInput').value);
-
-      if (isNaN(guess) || guess < 1 || guess > 100) {
-        document.getElementById('message').textContent = 'Please enter a valid number between 1 and 100.';
-        return;
-      }
-
-      attempts++;
-
-      if (guess === secretNumber) {
-        document.getElementById('message').textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
-      } else if (guess < secretNumber) {
-        document.getElementById('message').textContent = 'Too low! Try again.';
-      } else {
-        document.getElementById('message').textContent = 'Too high! Try again.';
-      }
-    }
-  </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
+#game-container {
+  height: 600px;
+  width: 800px;
+  margin: 0 auto;
+  border: 1px solid #000;
+  position: relative;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  border: 1px solid #ccc;
+}
+
+.player {
+  background-color: blue;
+}
+
+.block {
+  background-color: gray;
+}
+
+.goal {
+  background-color: yellow;
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const grid = document.getElementById("grid");
+  const cells = [];
+
+  for (let i = 0; i < 300; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cells.push(cell);
+    grid.appendChild(cell);
+  }
+
+  const playerStartPosition = 22; // Initial player position
+  let playerPosition = playerStartPosition;
+
+  cells[playerPosition].classList.add("player");
+
+  grid.addEventListener("click", function (event) {
+    const clickedCellIndex = cells.indexOf(event.target);
+
+    if (clickedCellIndex !== -1 && clickedCellIndex !== playerPosition) {
+      cells[playerPosition].classList.remove("player");
+      cells[playerPosition].classList.remove("block");
+      cells[playerPosition].classList.remove("goal");
+
+      playerPosition = clickedCellIndex;
+      cells[playerPosition].classList.add("player");
+    }
+  });
+});
