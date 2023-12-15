@@ -1,74 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sandbox Building Game</title>
+    <title>Whack-a-Mole</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+    <h1>Whack-a-Mole</h1>
     <div id="game-container">
-      <div id="grid"></div>
+      <div id="holes-container">
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+      </div>
     </div>
-
+    
     <script src="script.js"></script>
   </body>
 </html>
-#game-container {
-  height: 600px;
-  width: 800px;
-  margin: 0 auto;
-  border: 1px solid #000;
-  position: relative;
-}
-
-#grid {
-  display: grid;
-  grid-template-columns: repeat(20, 1fr);
-  grid-template-rows: repeat(15, 1fr);
-  width: 100%;
-  height: 100%;
-}
-
-.cell {
-  border: 1px solid #ccc;
-}
-
-.player {
-  background-color: blue;
-}
-
-.block {
-  background-color: gray;
-}
-
-.goal {
-  background-color: yellow;
-}
-document.addEventListener("DOMContentLoaded", function () {
-  const grid = document.getElementById("grid");
-  const cells = [];
-
-  for (let i = 0; i < 300; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-    cells.push(cell);
-    grid.appendChild(cell);
-  }
-
-  const playerStartPosition = 22; // Initial player position
-  let playerPosition = playerStartPosition;
-
-  cells[playerPosition].classList.add("player");
-
-  grid.addEventListener("click", function (event) {
-    const clickedCellIndex = cells.indexOf(event.target);
-
-    if (clickedCellIndex !== -1 && clickedCellIndex !== playerPosition) {
-      cells[playerPosition].classList.remove("player");
-      cells[playerPosition].classList.remove("block");
-      cells[playerPosition].classList.remove("goal");
-
-      playerPosition = clickedCellIndex;
-      cells[playerPosition].classList.add("player");
-    }
-  });
-});
