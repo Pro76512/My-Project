@@ -1,32 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Guessing Game</title>
+  <title>Game Website</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      padding: 20px;
+      color: white;
       text-align: center;
-      padding-top: 100px;
+    }
+    
+    h1 {
+      margin: 0;
+    }
+    
+    main {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    
+    .game {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    .game-card {
+      width: 200px;
+      margin-bottom: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Guessing Game</h1>
-  <p>Guess a number between 1 and 10:</p>
-  <input type="number" id="guessInput" onkeydown="if(event.keyCode === 13) checkGuess()">
-  <button onclick="checkGuess()">Submit</button>
-  <p id="result"></p>
-
-  <script>
-    function checkGuess() {
-      var guess = document.getElementById("guessInput").value;
-      var randomNumber = Math.floor(Math.random() * 10) + 1;
-
-      if (guess == randomNumber) {
-        document.getElementById("result").innerHTML = "Congratulations! You guessed it right!";
-      } else {
-        document.getElementById("result").innerHTML = "Sorry, try again!";
-      }
-    }
-  </script>
+  <header>
+    <h1>Game Website</h1>
+  </header>
+  
+  <main>
+    <div class="game">
+      <div class="game-card">
+        <h2>Game 1</h2>
+        <p>Description of Game 1</p>
+        <a href="game1.html">Play Game 1</a>
+      </div>
+      <div class="game-card">
+        <h2>Game 2</h2>
+        <p>Description of Game 2</p>
+        <a href="game2.html">Play Game 2</a>
+      </div>
+      <div class="game-card">
+        <h2>Game 3</h2>
+        <p>Description of Game 3</p>
+        <a href="game3.html">Play Game 3</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
