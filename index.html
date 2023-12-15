@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Two-Player Game</title>
+	<title>Race Game</title>
 	<style>
 		/* CSS styles go here */
 		#game-board {
@@ -24,8 +24,15 @@
 		#player-2 {
 			background-color: red;
 			top: 50%;
-			right: 10px;
+			left: 10px;
 			transform: translate(0, -50%);
+		}
+		.finish-line {
+			width: 10px;
+			height: 100%;
+			background-color: green;
+			position: absolute;
+			right: 0;
 		}
 	</style>
 </head>
@@ -33,31 +40,31 @@
 	<div id="game-board">
 		<div id="player-1" class="player"></div>
 		<div id="player-2" class="player"></div>
+		<div class="finish-line"></div>
 	</div>
 
 	<script>
 		// JavaScript code goes here
 		const player1 = document.getElementById("player-1");
 		const player2 = document.getElementById("player-2");
+		const finishLine = document.querySelector(".finish-line");
+		const gameBoard = document.getElementById("game-board");
+
+		const gameBoardWidth = gameBoard.offsetWidth;
+		const finishLinePosition = gameBoardWidth - finishLine.offsetWidth;
 
 		document.addEventListener("keydown", function(event) {
 			if (event.key === "w") {
 				movePlayer(player1, 0, -10);
 			} else if (event.key === "s") {
 				movePlayer(player1, 0, 10);
-			} else if (event.key === "a") {
-				movePlayer(player1, -10, 0);
-			} else if (event.key === "d") {
-				movePlayer(player1, 10, 0);
 			} else if (event.key === "ArrowUp") {
 				movePlayer(player2, 0, -10);
 			} else if (event.key === "ArrowDown") {
 				movePlayer(player2, 0, 10);
-			} else if (event.key === "ArrowLeft") {
-				movePlayer(player2, -10, 0);
-			} else if (event.key === "ArrowRight") {
-				movePlayer(player2, 10, 0);
 			}
+
+			checkWin();
 		});
 
 		function movePlayer(player, deltaX, deltaY) {
@@ -66,6 +73,21 @@
 
 			player.style.top = (playerTop + deltaY) + "px";
 			player.style.left = (playerLeft + deltaX) + "px";
+		}
+
+		function checkWin() {
+			if (parseInt(player1.style.left) >= finishLinePosition) {
+				alert("Player 1 wins!");
+				resetGame();
+			} else if (parseInt(player2.style.left) >= finishLinePosition) {
+				alert("Player 2 wins!");
+				resetGame();
+			}
+		}
+
+		function resetGame() {
+			player1.style.left = "10px";
+			player2.style.left = "10px";
 		}
 	</script>
 </body>
