@@ -31,13 +31,19 @@
 <body>
   <h1>Guess the Number</h1>
   <p>Guess a number between 1 and 10,000:</p>
-  <input type="number" id="guess" min="1" max="10000">
+  <input type="number" id="guess" min="1" max="10000" onkeyup="handleKeyUp(event)">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
   <p id="tries">Tries remaining: 100</p>
 
   <script>
     var remainingTries = 100;
+
+    function handleKeyUp(event) {
+      if (event.keyCode === 13) {
+        checkGuess();
+      }
+    }
 
     function checkGuess() {
       var guess = parseInt(document.getElementById("guess").value);
