@@ -30,20 +30,22 @@
 </head>
 <body>
   <h1>Guess the Number</h1>
-  <p>Guess a number between 1 and 10:</p>
-  <input type="number" id="guess" min="1" max="10">
+  <p>Guess a number between 1 and 10000:</p>
+  <input type="number" id="guess" min="1" max="10000">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
 
   <script>
     function checkGuess() {
       var guess = parseInt(document.getElementById("guess").value);
-      var randomNumber = Math.floor(Math.random() * 10) + 1;
+      var randomNumber = Math.floor(Math.random() * 10000) + 1;
 
       if (guess === randomNumber) {
         document.getElementById("result").innerText = "Congratulations! You guessed the correct number!";
+      } else if (guess < randomNumber) {
+        document.getElementById("result").innerText = "Too low! The correct number was " + randomNumber + ". Try again!";
       } else {
-        document.getElementById("result").innerText = "Sorry, the correct number was " + randomNumber + ". Try again!";
+        document.getElementById("result").innerText = "Too high! The correct number was " + randomNumber + ". Try again!";
       }
     }
   </script>
