@@ -30,14 +30,14 @@
 </head>
 <body>
   <h1>Guess the Number</h1>
-  <p>Guess a number between 1 and 10,000:</p>
-  <input type="number" id="guess" min="1" max="10000" onkeyup="handleKeyUp(event)">
+  <p>Guess a number between 1 and 100:</p>
+  <input type="number" id="guess" min="1" max="100" onkeyup="handleKeyUp(event)">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
-  <p id="tries">Tries remaining: 100</p>
+  <p id="tries">Tries remaining: 15</p>
 
   <script>
-    var remainingTries = 100;
+    var remainingTries = 15;
 
     function handleKeyUp(event) {
       if (event.keyCode === 13) {
@@ -47,7 +47,7 @@
 
     function checkGuess() {
       var guess = parseInt(document.getElementById("guess").value);
-      var randomNumber = Math.floor(Math.random() * 10000) + 1;
+      var randomNumber = Math.floor(Math.random() * 100) + 1;
       var resultElement = document.getElementById("result");
       var triesElement = document.getElementById("tries");
 
@@ -55,16 +55,16 @@
         resultElement.innerText = "Congratulations! You guessed the correct number!";
         disableInputAndButton();
       } else if (guess < randomNumber) {
-        resultElement.innerText = "Too low! Try again!";
+        resultElement.innerText = "Too low! Try again!!!!!!!!!";
       } else {
-        resultElement.innerText = "Too high! Try again!";
+        resultElement.innerText = "Too high! Try again!!!!!!!";
       }
 
       remainingTries--;
-      triesElement.innerText = "Tries remaining: " + remainingTries;
+      triesElement.innerText = "Tries: " + remainingTries;
 
       if (remainingTries === 0) {
-        resultElement.innerText = "Game over! You ran out of tries. The correct number was " + randomNumber + ".";
+        resultElement.innerText = "Game over!!!!!!. The correct number was " + randomNumber + ".";
         disableInputAndButton();
       }
     }
