@@ -1,181 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>2D Basketball Game</title>
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
+	<title>1234</title>
+	<style>
+		/* CSS styles go here */
+		#game-board {
+			width: 400px;
+			height: 400px;
+			border: 1px solid black;
+			position: relative;
+		}
+		.player {
+			width: 50px;
+			height: 50px;
+			position: absolute;
+		}
+		#player-1 {
+			background-color: blue;
+			top: 50%;
+			left: 10px;
+			transform: translate(0, -50%);
+		}
+		#player-2 {
+			background-color: red;
+			top: 50%;
+			right: 10px;
+			transform: translate(0, -50%);
+		}
+	</style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <script>
-        // Get the canvas element
-        var canvas = document.getElementById("gameCanvas");
-        var ctx = canvas.getContext("2d");
+	<div id="game-board">
+		<div id="player-1" class="player"></div>
+		<div id="player-2" class="player"></div>
+	</div>
 
-        // Set initial variables
-        var ballX = canvas.width / 2;
-        var ballY = canvas.height - 30;
-        var ballRadius = 10;
-        var ballSpeedX = 2;
-        var ballSpeedY = -2;
+	<script>
+		// JavaScript code goes here
+		const player1 = document.getElementById("player-1");
+		const player2 = document.getElementById("player-2");
 
-        var player1X = canvas.width / 2;
-        var player1Y = canvas.height - 10;
-        var player1Width = 100;
-        var player1Height = 10;
-        var player1Speed = 5;
-        var player1Left = false;
-        var player1Right = false;
+		document.addEventListener("keydown", function(event) {
+			if (event.key === "w") {
+				movePlayer(player1, 0, -10);
+			} else if (event.key === "s") {
+				movePlayer(player1, 0, 10);
+			} else if (event.key === "a") {
+				movePlayer(player1, -10, 0);
+			} else if (event.key === "d") {
+				movePlayer(player1, 10, 0);
+			} else if (event.key === "ArrowUp") {
+				movePlayer(player2, 0, -10);
+			} else if (event.key === "ArrowDown") {
+				movePlayer(player2, 0, 10);
+			} else if (event.key === "ArrowLeft") {
+				movePlayer(player2, -10, 0);
+			} else if (event.key === "ArrowRight") {
+				movePlayer(player2, 10, 0);
+			}
+		});
 
-        var player2X = canvas.width / 2;
-        var player2Y = 0;
-        var player2Width = 100;
-        var player2Height = 10;
-        var player2Speed = 5;
-        var player2Left = false;
-        var player2Right = false;
+		function movePlayer(player, deltaX, deltaY) {
+			let playerTop = parseInt(player.style.top) || 0;
+			let playerLeft = parseInt(player.style.left) || 0;
 
-        var player1Lose = false;
-        var player2Lose = false;
-
-        // Function to draw the ball on the canvas
-        function drawBall() {
-            ctx.beginPath();
-            ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-            ctx.fillStyle = "red";
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        // Function to draw the players on the canvas
-        function drawPlayers() {
-            ctx.beginPath();
-            ctx.rect(player1X - player1Width / 2, player1Y - player1Height / 2, player1Width, player1Height);
-            ctx.fillStyle = "blue";
-            ctx.fill();
-            ctx.closePath();
-
-            ctx.beginPath();
-            ctx.rect(player2X - player2Width / 2, player2Y - player2Height / 2, player2Width, player2Height);
-            ctx.fillStyle = "green";
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        // Function to update the ball's position and check for collisions
-        function update() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBall();
-            drawPlayers();
-
-            // Reverse ball's direction when hitting the walls
-            if (ballX + ballSpeedX < ballRadius || ballX + ballSpeedX > canvas.width - ballRadius) {
-                ballSpeedX = -ballSpeedX;
-            }
-
-            // Check for ball collision with player 1
-            if (ballY + ballSpeedY > player1Y - player1Height / 2 && ballX >= player1X - player1Width / 2 && ballX <= player1X + player1Width / 2) {
-                ballSpeedY = -ballSpeedY;
-            }
-
-            // Check for ball collision with player 2
-            if (ballY + ballSpeedY < player2Y + player2Height / 2 && ballX >= player2X - player2Width / 2 && ballX <= player2X + player2Width / 2) {
-                ballSpeedY = -ballSpeedY;
-            }
-
-            // Check if ball touches the line behind player 1
-            if (ballY + ballSpeedY > canvas.height - player1Height) {
-                player1Lose = true;
-            }
-
-            // Check if ball touches the line behind player 2
-            if (ballY + ballSpeedY < player2Height) {
-                player2Lose = true;
-            }
-
-            // Move the players left or right
-            if (player1Left && player1X - player1Width / 2 > 0) {
-                player1X -= player1Speed;
-            }
-
-            if (player1Right && player1X + player1Width / 2 < canvas.width) {
-                player1X += player1Speed;
-            }
-
-            if (player2Left && player2X - player2Width / 2 > 0) {
-                player2X -= player2Speed;
-            }
-
-            if (player2Right && player2X + player2Width / 2 < canvas.width) {
-                player2X += player2Speed;
-            }
-
-            ballX += ballSpeedX;
-            ballY += ballSpeedY;
-
-            // Check if either player has lost
-            if (player1Lose) {
-                alert("Player 1 loses!");
-                resetGame();
-            }
-
-            if (player2Lose) {
-                alert("Player 2 loses!");
-                resetGame();
-            }
-
-            requestAnimationFrame(update);
-        }
-
-        // Event listeners for player controls
-        document.addEventListener("keydown", keyDownHandler, false);
-        document.addEventListener("keyup", keyUpHandler, false);
-
-        function keyDownHandler(event) {
-            if (event.keyCode == 37) {
-                player1Left = true;
-            }
-            else if (event.keyCode == 39) {
-                player1Right = true;
-            }
-            else if (event.keyCode == 65) {
-                player2Left = true;
-            }
-            else if (event.keyCode == 68) {
-                player2Right = true;
-            }
-        }
-
-        function keyUpHandler(event) {
-            if (event.keyCode == 37) {
-                player1Left = false;
-            }
-            else if (event.keyCode == 39) {
-                player1Right = false;
-            }
-            else if (event.keyCode == 65) {
-                player2Left = false;
-            }
-            else if (event.keyCode == 68) {
-                player2Right = false;
-            }
-        }
-
-        // Function to reset the game
-        function resetGame() {
-            ballX = canvas.width / 2;
-            ballY = canvas.height - 30;
-            player1X = canvas.width / 2;
-            player2X = canvas.width / 2;
-            player1Lose = false;
-            player2Lose = false;
-        }
-
-        // Start the game loop
-        update();
-    </script>
+			player.style.top = (playerTop + deltaY) + "px";
+			player.style.left = (playerLeft + deltaX) + "px";
+		}
+	</script>
 </body>
 </html>
