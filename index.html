@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Whack-a-Mole</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Guess the Word</title>
   </head>
   <body>
-    <h1>Whack-a-Mole</h1>
-    <div id="game-container">
-      <div id="holes-container">
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-        <div class="hole"></div>
-      </div>
-    </div>
+    <h1>Guess the Word</h1>
+    <p id="word"></p>
+    <p id="message"></p>
+    <input type="text" id="guess-input">
+    <button id="guess-button" onclick="checkGuess()">Guess</button>
     
     <script src="script.js"></script>
   </body>
