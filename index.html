@@ -1,81 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>2D Basketball Game</title>
+    <title>Catch the Falling Fruit</title>
     <style>
-        canvas {
-            border: 1px solid black;
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #basket {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('basket.png');
+            background-size: cover;
+        }
+        .fruit {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(500px);
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="basket"></div>
+
     <script>
-        // Get the canvas element
-        var canvas = document.getElementById("gameCanvas");
-        var ctx = canvas.getContext("2d");
+        var score = 0;
 
-        // Set initial variables
-        var ballX = canvas.width / 2;
-        var ballY = canvas.height - 30;
-        var ballRadius = 10;
-        var ballSpeedX = 2;
-        var ballSpeedY = -2;
-        var ballSpeedIncrease = 0.5;
-
-        var player1X = canvas.width / 2;
-        var player1Y = canvas.height - 10;
-        var player1Width = 100;
-        var player1Height = 10;
-        var player1Speed = 5;
-        var player1Left = false;
-        var player1Right = false;
-
-        var player2X = canvas.width / 2;
-        var player2Y = 0;
-        var player2Width = 100;
-        var player2Height = 10;
-        var player2Speed = 5;
-        var player2Left = false;
-        var player2Right = false;
-
-        var player1Lose = false;
-        var player2Lose = false;
-
-        // Function to draw the ball on the canvas
-        function drawBall() {
-            ctx.beginPath();
-            ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-            ctx.fillStyle = "red";
-            ctx.fill();
-            ctx.closePath();
+        function updateScore() {
+            document.getElementById("score").innerText = "Score: " + score;
         }
 
-        // Function to draw the players on the canvas
-        function drawPlayers() {
-            ctx.beginPath();
-            ctx.rect(player1X - player1Width / 2, player1Y - player1Height / 2, player1Width, player1Height);
-            ctx.fillStyle = "blue";
-            ctx.fill();
-            ctx.closePath();
+        function createFruit() {
+            var fruits = ['apple.png', 'banana.png', 'orange.png'];
+            var randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
 
-            ctx.beginPath();
-            ctx.rect(player2X - player2Width / 2, player2Y - player2Height / 2, player2Width, player2Height);
-            ctx.fillStyle = "green";
-            ctx.fill();
-            ctx.closePath();
+            var fruit = document.createElement("div");
+            fruit.className = "fruit";
+            fruit.style.backgroundImage = "url('" + randomFruit + "')";
+            fruit.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
+
+            fruit.addEventListener("click", function() {
+                this.remove();
+                score++;
+                updateScore();
+            });
+
+            document.body.appendChild(fruit);
         }
 
-        // Function to update the ball's position and check for collisions
-        function update() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBall();
-            drawPlayers();
+        setInterval(createFruit, 1000);
 
-            // Reverse ball's direction when hitting the walls
-            if (ballX + ballSpeedX < ballRadius || ballX + ballSpeedX > canvas.width - ballRadius) {
-                ballSpeedX = -ballSpeedX;
-            }
-
-            // Check for ball collision with player 1
-            if (ballY + ballSpeedY > player1Y - player1Height / 2 && ballX >= player1X - player1Width / 2 && ballX <= player1X +
+        window.addEventListener("mousemove", function(event) {
+            var basket = document.getElementById("basket");
+            basket.style.left = event.clientX - 50 + "px";
+        });
+    </script>
+</body>
+</html>
