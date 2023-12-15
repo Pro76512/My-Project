@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Guess the Word</title>
-  </head>
-  <body>
-    <h1>Guess the Word</h1>
-    <p id="word"></p>
-    <p id="message"></p>
-    <input type="text" id="guess-input">
-    <button id="guess-button" onclick="checkGuess()">Guess</button>
-    
-    <script src="script.js"></script>
-  </body>
+<head>
+  <title>Guessing Game</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guessing Game</h1>
+  <p>Guess a number between 1 and 10:</p>
+  <input type="number" id="guessInput">
+  <button onclick="checkGuess()">Submit</button>
+  <p id="result"></p>
+
+  <script>
+    function checkGuess() {
+      var guess = document.getElementById("guessInput").value;
+      var randomNumber = Math.floor(Math.random() * 10) + 1;
+
+      if (guess == randomNumber) {
+        document.getElementById("result").innerHTML = "Congratulations! You guessed it right!";
+      } else {
+        document.getElementById("result").innerHTML = "Sorry, try again!";
+      }
+    }
+  </script>
+</body>
 </html>
