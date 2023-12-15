@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>2D Basketball Game</title>
+    <title>TEST</title>
     <style>
         canvas {
             border: 1px solid black;
@@ -22,6 +22,22 @@
         var ballSpeedX = 2;
         var ballSpeedY = -2;
 
+        var player1X = canvas.width / 2;
+        var player1Y = canvas.height - 10;
+        var player1Width = 100;
+        var player1Height = 10;
+        var player1Speed = 5;
+        var player1Left = false;
+        var player1Right = false;
+
+        var player2X = canvas.width / 2;
+        var player2Y = 0;
+        var player2Width = 100;
+        var player2Height = 10;
+        var player2Speed = 5;
+        var player2Left = false;
+        var player2Right = false;
+
         // Function to draw the ball on the canvas
         function drawBall() {
             ctx.beginPath();
@@ -31,10 +47,26 @@
             ctx.closePath();
         }
 
+        // Function to draw the players on the canvas
+        function drawPlayers() {
+            ctx.beginPath();
+            ctx.rect(player1X - player1Width / 2, player1Y - player1Height / 2, player1Width, player1Height);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.rect(player2X - player2Width / 2, player2Y - player2Height / 2, player2Width, player2Height);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            ctx.closePath();
+        }
+
         // Function to update the ball's position and check for collisions
         function update() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
+            drawPlayers();
 
             // Reverse ball's direction when hitting the walls
             if (ballX + ballSpeedX < ballRadius || ballX + ballSpeedX > canvas.width - ballRadius) {
@@ -45,10 +77,70 @@
                 ballSpeedY = -ballSpeedY;
             }
 
+            // Reverse ball's direction when hitting the players
+            if (ballY + ballSpeedY > player1Y - player1Height / 2 && ballX >= player1X - player1Width / 2 && ballX <= player1X + player1Width / 2) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+            if (ballY + ballSpeedY < player2Y + player2Height / 2 && ballX >= player2X - player2Width / 2 && ballX <= player2X + player2Width / 2) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+            // Move the players left or right
+            if (player1Left && player1X - player1Width / 2 > 0) {
+                player1X -= player1Speed;
+            }
+
+            if (player1Right && player1X + player1Width / 2 < canvas.width) {
+                player1X += player1Speed;
+            }
+
+            if (player2Left && player2X - player2Width / 2 > 0) {
+                player2X -= player2Speed;
+            }
+
+            if (player2Right && player2X + player2Width / 2 < canvas.width) {
+                player2X += player2Speed;
+            }
+
             ballX += ballSpeedX;
             ballY += ballSpeedY;
 
             requestAnimationFrame(update);
+        }
+
+        // Event listeners for player controls
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+
+        function keyDownHandler(event) {
+            if (event.keyCode == 37) {
+                player1Left = true;
+            }
+            else if (event.keyCode == 39) {
+                player1Right = true;
+            }
+            else if (event.keyCode == 65) {
+                player2Left = true;
+            }
+            else if (event.keyCode == 68) {
+                player2Right = true;
+            }
+        }
+
+        function keyUpHandler(event) {
+            if (event.keyCode == 37) {
+                player1Left = false;
+            }
+            else if (event.keyCode == 39) {
+                player1Right = false;
+            }
+            else if (event.keyCode == 65) {
+                player2Left = false;
+            }
+            else if (event.keyCode == 68) {
+                player2Right = false;
+            }
         }
 
         // Start the game loop
