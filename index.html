@@ -12,7 +12,7 @@
 <body>
   <h1>Guessing Game</h1>
   <p>Guess a number between 1 and 10:</p>
-  <input type="number" id="guessInput">
+  <input type="number" id="guessInput" onkeydown="if(event.keyCode === 13) checkGuess()">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
 
