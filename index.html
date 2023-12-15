@@ -1,69 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cool Website</title>
-    <style>
-        body {
-            background-color: #222;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 36px;
-            margin: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        p {
-            font-size: 18px;
-            line-height: 1.5;
-        }
-        .button {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        footer {
-            background-color: #333;
-            padding: 20px;
-        }
-        footer p {
-            margin: 0;
-            font-size: 14px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Welcome to the Cool Website!</h1>
-    </header>
+import random
 
-    <div class="container">
-        <h2>About</h2>
-        <p>This is a cool website designed to showcase the power of HTML and CSS.</p>
-        <p>Feel free to explore and have fun!</p>
-        <a class="button" href="#">Learn More</a>
-    </div>
+def hangman():
+    words = ['python', 'javascript', 'ruby', 'java', 'html', 'css']
+    secret_word = random.choice(words)
+    guessed_letters = []
+    attempts = 6
 
-    <footer>
-        <p>&copy; 2022 Cool Website. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+    print("Welcome to Hangman!")
+    print("The word contains", len(secret_word), "letters.")
+
+    while True:
+        if attempts == 0:
+            print("You lost! The word was", secret_word)
+            break
+
+        print("\nAttempts left:", attempts)
+        guessed_word = ""
+        for letter in secret_word:
+            if letter in guessed_letters:
+                guessed_word += letter
+            else:
+                guessed_word += "_"
+        print(guessed_word)
+
+        if guessed_word == secret_word:
+            print("Congratulations! You won!")
+            break
+
+        try:
+            guess = input("Guess a letter: ").lower()
+
+            if len(guess) != 1 or not guess.isalpha():
+                raise ValueError("Invalid input. Please enter a single letter.")
+
+            if guess in guessed_letters:
+                print("You already guessed that letter. Try again.")
+            elif guess not in secret_word:
+                print("Wrong guess!")
+                attempts -= 1
+            else:
+                print("Correct guess!")
+                guessed_letters.append(guess)
+
+        except ValueError as error:
+            print(error)
+
+hangman()
