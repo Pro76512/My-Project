@@ -1,94 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Race Gam</title>
-	<style>
-		/* CSS styles go here */
-		#game-board {
-			width: 400px;
-			height: 400px;
-			border: 1px solid black;
-			position: relative;
-		}
-		.player {
-			width: 50px;
-			height: 50px;
-			position: absolute;
-		}
-		#player-1 {
-			background-color: blue;
-			top: 50%;
-			left: 10px;
-			transform: translate(0, -50%);
-		}
-		#player-2 {
-			background-color: red;
-			top: 50%;
-			left: 10px;
-			transform: translate(0, -50%);
-		}
-		.finish-line {
-			width: 10px;
-			height: 100%;
-			background-color: green;
-			position: absolute;
-			right: 0;
-		}
-	</style>
+  <title>Multiplayer Shooting Game</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
-	<div id="game-board">
-		<div id="player-1" class="player"></div>
-		<div id="player-2" class="player"></div>
-		<div class="finish-line"></div>
-	</div>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const context = canvas.getContext('2d');
+    const players = {};
 
-	<script>
-		// JavaScript code goes here
-		const player1 = document.getElementById("player-1");
-		const player2 = document.getElementById("player-2");
-		const finishLine = document.querySelector(".finish-line");
-		const gameBoard = document.getElementById("game-board");
+    function Player(id, x, y) {
+      this.id = id;
+      this.x = x;
+      this.y = y;
+    }
 
-		const gameBoardWidth = gameBoard.offsetWidth;
-		const finishLinePosition = gameBoardWidth - finishLine.offsetWidth;
+    function updatePlayer(id, x, y) {
+      if (!players[id]) {
+        players[id] = new Player(id, x, y);
+        return;
+      }
+      players[id].x = x;
+      players[id].y = y;
+    }
 
-		document.addEventListener("keydown", function(event) {
-			if (event.key === "w") {
-				movePlayer(player1, 0, -10);
-			} else if (event.key === "s") {
-				movePlayer(player1, 0, 10);
-			} else if (event.key === "ArrowUp") {
-				movePlayer(player2, 0, -10);
-			} else if (event.key === "ArrowDown") {
-				movePlayer(player2, 0, 10);
-			}
+    function removePlayer(id) {
+      delete players[id];
+    }
 
-			checkWin();
-		});
+    function drawPlayer(player) {
+      context.beginPath();
+      context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
+      context.fillStyle = '#FF0000';
+      context.fill();
+      context.lineWidth = 2;
+      context.strokeStyle = '#000000';
+      context.stroke();
+    }
 
-		function movePlayer(player, deltaX, deltaY) {
-			let playerTop = parseInt(player.style.top) || 0;
-			let playerLeft = parseInt(player.style.left) || 0;
+    function draw() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      for (const id in players) {
+        drawPlayer(players[id]);
+      }
+    }
 
-			player.style.top = (playerTop + deltaY) + "px";
-			player.style.left = (playerLeft + deltaX) + "px";
-		}
+    canvas.addEventListener('mousemove', function(event) {
+      // Handle mouse movement for controlling the player
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      // Send the player's position to the server for multiplayer synchronization
+      // Example: socket.emit('playerMovement', { x: mouseX, y: mouseY });
+    });
 
-		function checkWin() {
-			if (parseInt(player1.style.left) >= finishLinePosition) {
-				alert("Player 1 wins!");
-				resetGame();
-			} else if (parseInt(player2.style.left) >= finishLinePosition) {
-				alert("Player 2 wins!");
-				resetGame();
-			}
-		}
+    // Example socket.io code for multiplayer synchronization
+    // const socket = io();
+    // socket.on('playerJoined', function(playerData) {
+    //   updatePlayer(playerData.id, playerData.x, playerData.y);
+    // });
+    // socket.on('playerLeft', function(playerId) {
+    //   removePlayer(playerId);
+    // });
+    // socket.on('playerMovement', function(playerData) {
+    //   updatePlayer(playerData.id, playerData.x, playerData.y);
+    // });
 
-		function resetGame() {
-			player1.style.left = "10px";
-			player2.style.left = "10px";
-		}
-	</script>
+    function gameLoop() {
+      draw();
+      // Additional game logic goes here
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Start the game loop
+    gameLoop();
+  </script>
 </body>
 </html>
