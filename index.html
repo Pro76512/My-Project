@@ -38,6 +38,9 @@
         var player2Left = false;
         var player2Right = false;
 
+        var player1Lose = false;
+        var player2Lose = false;
+
         // Function to draw the ball on the canvas
         function drawBall() {
             ctx.beginPath();
@@ -73,17 +76,24 @@
                 ballSpeedX = -ballSpeedX;
             }
 
-            if (ballY + ballSpeedY < ballRadius || ballY + ballSpeedY > canvas.height - ballRadius) {
-                ballSpeedY = -ballSpeedY;
-            }
-
-            // Reverse ball's direction when hitting the players
+            // Check for ball collision with player 1
             if (ballY + ballSpeedY > player1Y - player1Height / 2 && ballX >= player1X - player1Width / 2 && ballX <= player1X + player1Width / 2) {
                 ballSpeedY = -ballSpeedY;
             }
 
+            // Check for ball collision with player 2
             if (ballY + ballSpeedY < player2Y + player2Height / 2 && ballX >= player2X - player2Width / 2 && ballX <= player2X + player2Width / 2) {
                 ballSpeedY = -ballSpeedY;
+            }
+
+            // Check if ball touches the line behind player 1
+            if (ballY + ballSpeedY > canvas.height - player1Height) {
+                player1Lose = true;
+            }
+
+            // Check if ball touches the line behind player 2
+            if (ballY + ballSpeedY < player2Height) {
+                player2Lose = true;
             }
 
             // Move the players left or right
@@ -105,6 +115,17 @@
 
             ballX += ballSpeedX;
             ballY += ballSpeedY;
+
+            // Check if either player has lost
+            if (player1Lose) {
+                alert("Player 1 loses!");
+                resetGame();
+            }
+
+            if (player2Lose) {
+                alert("Player 2 loses!");
+                resetGame();
+            }
 
             requestAnimationFrame(update);
         }
@@ -141,6 +162,16 @@
             else if (event.keyCode == 68) {
                 player2Right = false;
             }
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height - 30;
+            player1X = canvas.width / 2;
+            player2X = canvas.width / 2;
+            player1Lose = false;
+            player2Lose = false;
         }
 
         // Start the game loop
