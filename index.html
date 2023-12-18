@@ -12,13 +12,13 @@
 </head>
 <body>
   <h1>Number Guessing Game</h1>
-  <p>Guess a number between 1 and 10:</p>
+  <p>Guess a number between 1 and 100:</p>
   <input type="number" id="guessInput">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
 
   <script>
-    var targetNumber = Math.floor(Math.random() * 10) + 1;
+    var targetNumber = Math.floor(Math.random() * 100) + 1;
     var attempts = 0;
 
     function checkGuess() {
