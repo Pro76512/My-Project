@@ -7,6 +7,18 @@
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .game-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
@@ -45,19 +57,29 @@
   </style>
 </head>
 <body>
-  <h1>Number Guessing Game</h1>
-  <p>Guess a number between 1 and 100:</p>
-  <input type="number" id="guessInput">
-  <button onclick="checkGuess()">Submit</button>
-  <p id="result"></p>
+  <div class="game-container">
+    <h1>Number Guessing Game</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="guessInput">
+    <button onclick="checkGuess()">Submit</button>
+    <p id="result"></p>
+  </div>
 
   <script>
     var targetNumber = Math.floor(Math.random() * 100) + 1;
     var attempts = 0;
     var maxAttempts = 20;
 
+    var guessInput = document.getElementById("guessInput");
+    guessInput.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        checkGuess();
+      }
+    });
+
     function checkGuess() {
-      var guess = parseInt(document.getElementById("guessInput").value);
+      var guess = parseInt(guessInput.value);
       attempts++;
 
       if (guess === targetNumber) {
@@ -76,7 +98,7 @@
     }
 
     function disableInputAndButton() {
-      document.getElementById("guessInput").disabled = true;
+      guessInput.disabled = true;
       document.getElementsByTagName("button")[0].disabled = true;
     }
   </script>
