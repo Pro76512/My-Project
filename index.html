@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
   <title>Number Guessing Game</title>
@@ -56,14 +56,19 @@
       margin-top: 20px;
       color: #ff0000;
     }
-    input[type=number] {
-  padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #000000; /* Add this line to set the border color to black */
-  margin-bottom: 10px;
-  background-color: #ffffff;
-  color: #000000;
-}
+
+    #leaderboard {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    #leaderboard h3 {
+      color: #0000ff;
+    }
+
+    #leaderboard ol {
+      padding-left: 20px;
+    }
   </style>
 </head>
 <body>
@@ -74,12 +79,17 @@
     <button onclick="checkGuess()">Submit</button>
     <p id="result"></p>
     <button onclick="restartGame()" id="restartButton" style="display: none;">Restart</button>
+    <div id="leaderboard">
+      <h3>Leaderboard</h3>
+      <ol id="leaderboardList"></ol>
+    </div>
   </div>
 
   <script>
     var targetNumber;
     var attempts;
     var maxAttempts = 20;
+    var leaderboard = [];
 
     var guessInput = document.getElementById("guessInput");
     guessInput.addEventListener("keyup", function(event) {
@@ -103,6 +113,9 @@
       attempts++;
 
       if (guess === targetNumber) {
+        var playerName = prompt("Congratulations! You guessed the correct number in " + attempts + " attempts. Enter your name for the leaderboard:");
+        leaderboard.push({ name: playerName, attempts: attempts });
+        updateLeaderboard();
         document.getElementById("result").innerHTML = "Congratulations! You guessed the correct number in " + attempts + " attempts.";
         disableInputAndButton();
         document.getElementById("restartButton").style.display = "block";
@@ -126,6 +139,21 @@
 
     function restartGame() {
       startGame();
+    }
+
+    function updateLeaderboard() {
+      leaderboard.sort(function(a, b) {
+        return a.attempts - b.attempts;
+      });
+
+      var leaderboardList = document.getElementById("leaderboardList");
+      leaderboardList.innerHTML = "";
+
+      for (var i = 0; i < leaderboard.length; i++) {
+        var listItem = document.createElement("li");
+        listItem.innerHTML = leaderboard[i].name + " - " + leaderboard[i].attempts + " attempts";
+        leaderboardList.appendChild(listItem);
+      }
     }
 
     startGame();
