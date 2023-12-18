@@ -1,77 +1,37 @@
+html
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Guess the Number</title>
+  <title>Number Guessing Game</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
     }
-    h1 {
-      color: #333;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #result {
-      font-size: 24px;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
-  <h1>Guess the Number</h1>
-  <p>Guess a number between 1 and 100:</p>
-  <input type="number" id="guess" min="1" max="100" onkeyup="handleKeyUp(event)">
+  <h1>Number Guessing Game</h1>
+  <p>Guess a number between 1 and 10:</p>
+  <input type="number" id="guessInput">
   <button onclick="checkGuess()">Submit</button>
   <p id="result"></p>
-  <p id="tries">Tries remaining: 15</p>
 
   <script>
-    var remainingTries = 15;
-
-    function handleKeyUp(event) {
-      if (event.keyCode === 13) {
-        checkGuess();
-      }
-    }
+    var targetNumber = Math.floor(Math.random() * 10) + 1;
+    var attempts = 0;
 
     function checkGuess() {
-      var guess = parseInt(document.getElementById("guess").value);
-      var randomNumber = Math.floor(Math.random() * 100) + 1;
-      var resultElement = document.getElementById("result");
-      var triesElement = document.getElementById("tries");
+      var guess = parseInt(document.getElementById("guessInput").value);
+      attempts++;
 
-      if (guess === randomNumber) {
-        resultElement.innerText = "Congratulations! You guessed the correct number!";
-        disableInputAndButton();
-      } else if (guess < randomNumber) {
-        resultElement.innerText = "Too low! Try again!!!!!!!!!";
+      if (guess === targetNumber) {
+        document.getElementById("result").innerHTML = "Congratulations! You guessed the correct number in " + attempts + " attempts.";
+      } else if (guess > targetNumber) {
+        document.getElementById("result").innerHTML = "Too high! Try again.";
       } else {
-        resultElement.innerText = "Too high! Try again!!!!!!!";
+        document.getElementById("result").innerHTML = "Too low! Try again.";
       }
-
-      remainingTries--;
-      triesElement.innerText = "Tries: " + remainingTries;
-
-      if (remainingTries === 0) {
-        resultElement.innerText = "Game over!!!!!!. The correct number was " + randomNumber + ".";
-        disableInputAndButton();
-      }
-    }
-
-    function disableInputAndButton() {
-      document.getElementById("guess").disabled = true;
-      document.getElementsByTagName("button")[0].disabled = true;
     }
   </script>
 </body>
