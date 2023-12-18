@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,11 +64,12 @@
     <input type="number" id="guessInput">
     <button onclick="checkGuess()">Submit</button>
     <p id="result"></p>
+    <button onclick="restartGame()" id="restartButton" style="display: none;">Restart</button>
   </div>
 
   <script>
-    var targetNumber = Math.floor(Math.random() * 100) + 1;
-    var attempts = 0;
+    var targetNumber;
+    var attempts;
     var maxAttempts = 20;
 
     var guessInput = document.getElementById("guessInput");
@@ -78,6 +80,15 @@
       }
     });
 
+    function startGame() {
+      targetNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      guessInput.value = "";
+      guessInput.disabled = false;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("restartButton").style.display = "none";
+    }
+
     function checkGuess() {
       var guess = parseInt(guessInput.value);
       attempts++;
@@ -85,6 +96,7 @@
       if (guess === targetNumber) {
         document.getElementById("result").innerHTML = "Congratulations! You guessed the correct number in " + attempts + " attempts.";
         disableInputAndButton();
+        document.getElementById("restartButton").style.display = "block";
       } else if (guess > targetNumber) {
         document.getElementById("result").innerHTML = "Too high! Try again.";
       } else {
@@ -94,6 +106,7 @@
       if (attempts === maxAttempts) {
         document.getElementById("result").innerHTML = "Game over! You reached the maximum number of attempts. The correct number was " + targetNumber + ".";
         disableInputAndButton();
+        document.getElementById("restartButton").style.display = "block";
       }
     }
 
@@ -101,6 +114,12 @@
       guessInput.disabled = true;
       document.getElementsByTagName("button")[0].disabled = true;
     }
+
+    function restartGame() {
+      startGame();
+    }
+
+    startGame();
   </script>
 </body>
 </html>
