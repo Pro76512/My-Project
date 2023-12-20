@@ -1,26 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>1234</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        
-        #game-iframe {
-            width: 800px;
-            height: 600px;
-            margin: 0 auto;
-            display: block;
-        }
-    </style>
+  <title>Guess the Number</title>
+  <style>
+    body {
+      text-align: center;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    h1 {
+      color: #00ff00;
+      font-size: 36px;
+      margin-top: 50px;
+    }
+    
+    p {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #444;
+      border: none;
+      color: #fff;
+      outline: none;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #00ff00;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #00cc00;
+    }
+    
+    #message {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1><center>Welcome to the Game Website!</center></h1>
-    
-  <button onclick="window.open('https://www.spend-elon-fortune.com/', '_blank')">
-  <iframe src="https://www.spend-elon-fortune.com/" width="500" height="300"></iframe>
-</button>
+  <h1>Guess the Number</h1>
+  <p>Try to guess the secret number between 1 and 100.</p>
+  <input type="number" id="guess" min="1" max="100" required>
+  <br>
+  <button onclick="checkGuess()">Guess</button>
+  <p id="message"></p>
+
+  <script>
+    // Generate a random secret number between 1 and 100
+    const secretNumber = Math.floor(Math.random() * 100) + 1;
+
+    function checkGuess() {
+      // Get the user's guess from the input field
+      const guess = parseInt(document.getElementById("guess").value);
+
+      // Check if the guess is correct
+      if (guess === secretNumber) {
+        showMessage("Congratulations! You guessed the correct number.");
+      } else if (guess < secretNumber) {
+        showMessage("Too low. Try again.");
+      } else {
+        showMessage("Too high. Try again.");
+      }
+    }
+
+    function showMessage(message) {
+      document.getElementById("message").innerHTML = message;
+    }
+  </script>
 </body>
 </html>
