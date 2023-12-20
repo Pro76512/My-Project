@@ -1,60 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Platformer Game</title>
-    <link rel="stylesheet" type="text/css" ">
-    body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-#game-container {
-    width: 800px;
-    height: 600px;
-    background-color: black;
-    position: relative;
-}
-
-#player {
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-}
+    <title>Game Website</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #game-iframe {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div id="game-container">
-        <div id="player"></div>
-    </div>
-
-    <script src="script.js">// Get the player element
-var player = document.getElementById("player");
-
-// Player variables
-var playerX = 375;
-var playerY = 0;
-var playerVel = 5;
-
-// Handle keydown event for player movement
-document.addEventListener("keydown", function(event) {
-    if (event.key === "ArrowLeft" && playerX > 0) {
-        playerX -= playerVel;
-    }
-    if (event.key === "ArrowRight" && playerX < 750) {
-        playerX += playerVel;
-    }
-
-    // Update player position
-    player.style.left = playerX + "px";
-});
-
-// Handle keyup event for player actions
-document.addEventListener("keyup", function(event) {
-    if (event.key === "Space") {
-        // Perform player action
-    }
-});</script>
+    <h1>Welcome to the Game Website!</h1>
+    
+    <iframe id="game-iframe" src="https://uvlol-w212.koyeb.app/uv/service/hvtrs8%2F-cjav.ahctepvdgmm.lev%2F"></iframe>
 </body>
 </html>
